@@ -1,0 +1,50 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Lista de Usuários</title>
+    <link th:href="@{/css/styles.css}" rel="stylesheet"> 
+</head>
+<body>
+    <div class="container">
+        <h1>Lista de Usuários</h1>
+
+        <div th:if="${mensagem}" class="mensagem-servidor">
+            <p th:text="${mensagem}"></p>
+        </div>
+
+        <div class="actions">
+            <a href="#" th:href="@{/usuario/novo}" class="btn">Adicionar Novo Usuário</a>
+
+            <form th:action="@{/usuario/buscar}" method="get" class="search-form">
+                <input type="text" name="nome" placeholder="Buscar por nome" required />
+                <button type="submit" class="btn">Buscar</button>
+            </form>
+        </div>        
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Nome</th>
+                    <th>Login</th>
+                    <th>Administrador</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="usuario : ${usuarios}">
+                    <td th:text="${usuario.nome}">Nome</td>
+                    <td th:text="${usuario.login}">Login</td>
+                    <td th:text="${usuario.administrador != null && usuario.administrador ? 'Sim' : 'Não'}">Administrador</td>
+                    <td>
+                        <a th:href="@{/usuario/editar/{login}(login=${usuario.login})}" class="btn btn-edit">Editar</a>
+                                                
+                        <form th:action="@{/usuario/excluir/{login}(login=${usuario.login})}" method="post" 
+                           th:onsubmit="return confirm('Tem certeza que deseja excluir?');" style="display:inline;">
+                            <button type="submit" class="btn btn-delete">Excluir</button>
+                        </form>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

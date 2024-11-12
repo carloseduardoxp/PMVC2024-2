@@ -1,0 +1,38 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title th:text="${usuario.login != null ? 'Editar Usuário' : 'Novo Usuário'}">Formulário de Usuário</title>
+    <link th:href="@{/css/styles.css}" rel="stylesheet"> 
+</head>
+<body>
+    <div class="container">
+        <h1 th:text="${usuario.login != null ? 'Editar Usuário' : 'Novo Usuário'}">Formulário de Usuário</h1>
+
+        <form th:action="@{${usuario.login != null ? '/usuario/editar/' + usuario.login : '/usuario/novo'}}" th:object="${usuario}" method="post">            
+            <div>
+                <label for="login">Login:</label>
+                <input type="text" th:field="*{login}" id="login" placeholder="Digite o login" required
+                 th:readonly="${usuario.login != null}" />
+            </div>
+
+            <div>
+                <label for="senha">Senha:</label>
+                <input type="password" th:field="*{senha}" id="senha" placeholder="Digite a senha" required />
+            </div>
+
+            <div>
+                <label for="nome">Nome:</label>
+                <input type="text" th:field="*{nome}" id="nome" placeholder="Digite o nome" required />
+            </div>
+
+            <div>
+                <label for="administrador">Administrador:</label>
+                <input type="checkbox" th:field="*{administrador}" id="administrador" />
+            </div>
+
+            <button type="submit" th:text="${usuario.login != null ? 'Atualizar' : 'Salvar'}">Salvar</button>
+        </form>
+
+        <a th:href="@{/usuario}" class="btn">Voltar à Lista de Usuários</a>
+    </div>
+</body>
+</html>
