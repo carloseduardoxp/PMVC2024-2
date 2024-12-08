@@ -1,0 +1,51 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Lista de Ocorrências</title>
+    <link th:href="@{/css/styles.css}" rel="stylesheet"> 
+</head>
+<body>
+    <div class="container">
+        <h1>Lista de Ocorrências</h1>
+
+        <div th:if="${mensagem}" class="mensagem-servidor">
+            <p th:text="${mensagem}"></p>
+        </div>
+
+        <div class="actions">
+            <a href="#" th:href="@{/ocorrencia/novo}" class="btn">Adicionar Nova Ocorrência</a>
+
+            <form th:action="@{/ocorrencia/buscar}" method="get" class="search-form">
+                <input type="text" name="descricao" placeholder="Buscar por descrição" required />
+                <button type="submit" class="btn">Buscar</button>
+            </form>
+        </div>        
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Código</th>
+                    <th>Descrição</th>
+                    <th>Data</th>
+                    <th>Usuário</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="ocorrencia : ${ocorrencias}">
+                    <td th:text="${ocorrencia.codigo}">Código</td>
+                    <td th:text="${ocorrencia.descricao}">Descrição</td>
+                    <td th:text="${ocorrencia.dataHora}">Data</td>
+                    <td th:text="${ocorrencia.usuario.login}">Usuário</td>
+                    <td>
+                        <a th:href="@{/ocorrencia/editar/{codigo}(codigo=${ocorrencia.codigo})}" class="btn btn-edit">Editar</a>
+                                                
+                        <form th:action="@{/ocorrencia/excluir/{codigo}(codigo=${ocorrencia.codigo})}" method="post" 
+                           th:onsubmit="return confirm('Tem certeza que deseja excluir?');" style="display:inline;">
+                            <button type="submit" class="btn btn-delete">Excluir</button>
+                        </form>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

@@ -1,0 +1,39 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title th:text="${ocorrencia.codigo != null ? 'Editar Ocorrência' : 'Nova Ocorrência'}">Formulário de Ocorrências</title>
+    <link th:href="@{/css/styles.css}" rel="stylesheet"> 
+</head>
+<body>
+    <div class="container">
+        <h1 th:text="${ocorrencia.codigo != null ? 'Editar Ocorrência' : 'Nova Ocorrência'}">Formulário de Ocorrência</h1>
+
+        <form th:action="@{${ocorrencia.codigo != null ? '/ocorrencia/editar/' + ocorrencia.codigo : '/ocorrencia/novo'}}" th:object="${ocorrencia}" method="post">            
+            <div>
+                <label for="codigo">Código:</label>
+                <input type="text" th:field="*{codigo}" id="codigo" placeholder="Digite o código" required
+                 th:readonly="${ocorrencia.codigo != null}" />
+            </div>
+
+            <div>
+                <label for="descricao">Descrição:</label>
+                <input type="text" th:field="*{descricao}" id="descricao" placeholder="Digite a descrição" required />
+            </div>
+
+            <div>
+                <label for="usuario">Usuário:</label>
+                <select id="usuario" name="usuario" th:field="*{usuario.login}">
+                    <option value="" disabled selected>Selecione um usuário</option>
+                    <option th:each="usuario : ${usuarios}" 
+                            th:value="${usuario.login}" 
+                            th:text="${usuario.nome}">
+                    </option>
+                </select>
+            </div>
+
+            <button type="submit" th:text="${ocorrencia.codigo != null ? 'Atualizar' : 'Salvar'}">Salvar</button>
+        </form>
+
+        <a th:href="@{/ocorrencia}" class="btn">Voltar à Lista de Ocorrências</a>
+    </div>
+</body>
+</html>
