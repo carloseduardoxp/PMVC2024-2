@@ -1,27 +1,47 @@
 <html xmlns:th="http://www.thymeleaf.org">
     <head>
         <title> Artistas</title>
+        <link th:href="@{/css/styles.css}" rel="stylesheet"> 
     </head>
     <body>
+        <div class="container">
 
-        <div th:if="${mensagem}">
-            <p th:text="${mensagem}"></p>
+            <div th:if="${mensagem}">
+                <p th:text="${mensagem}"></p>
+            </div>
+
+            <div class="actions">
+                <a href="#" th:href="@{/artistas/novo}" class="btn">Adicionar Novo Artista</a>
+
+                <form th:action="@{/artistas/buscar}" method="get" class="search-form">
+                    <input type="text" name="nome" placeholder="Buscar por nome" required />
+                    <button type="submit" class="btn">Buscar</button>
+                </form>
+            </div>        
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Código</th>
+                        <th>Nome</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="artista : ${artistas}">
+                        <td th:text="${artista.codigo}">Código</td>
+                        <td th:text="${artista.nome}">Nome</td>
+                        <td>
+                            <a th:href="@{/artistas/editar/{codigo}(codigo=${artista.codigo})}" class="btn btn-edit">Editar</a>
+                                                    
+                            <form th:action="@{/artistas/excluir/{codigo}(codigo=${artista.codigo})}" method="post" 
+                            th:onsubmit="return confirm('Tem certeza que deseja excluir?');" style="display:inline;">
+                                <button type="submit" class="btn btn-delete">Excluir</button>
+                            </form>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
-
-        <table>
-            <thead>
-                <tr>
-                    <th>Código</th>
-                    <th>Nome</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr th:each="artista : ${artistas}">
-                    <td th:text="${artista.codigo}">Código</td>
-                    <td th:text="${artista.nome}">Nome</td>
-                </tr>
-            </tbody>
-        </table>
 
     </body>
 </html>

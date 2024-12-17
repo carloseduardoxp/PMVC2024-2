@@ -1,0 +1,25 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link th:href="@{/css/styles.css}" rel="stylesheet"> 
+</head>
+<body>
+    <div class="container">
+        <form th:action="@{${'/artistas/novo'}}" th:object="${artista}" method="post">            
+            <div>
+                <label for="codigo">Código:</label>
+                <input type="text" th:field="*{codigo}" id="codigo" 
+                 th:readonly="true" />
+            </div>
+
+            <div>
+                <label for="nome">Nome:</label>
+                <input type="text" th:field="*{nome}" id="nome" placeholder="Digite o nome" required />
+            </div>
+
+            <button type="submit" text="Salvar">Salvar</button>
+        </form>
+
+        <a th:href="@{/artistas/listar}" class="btn">Voltar à Lista de Artistas</a>
+    </div>
+</body>
+</html>
