@@ -1,0 +1,51 @@
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title> Albuns</title>
+        <link th:href="@{/css/styles.css}" rel="stylesheet"> 
+    </head>
+    <body>
+        <div class="container">
+
+            <div th:if="${mensagem}">
+                <p th:text="${mensagem}"></p>
+            </div>
+
+            <div class="actions">
+                <a href="#" th:href="@{/albuns/novo}" class="btn">Adicionar Novo Album</a>
+
+                <form th:action="@{/albuns/buscar}" method="get" class="search-form">
+                    <input type="text" name="nome" placeholder="Buscar por nome" required />
+                    <button type="submit" class="btn">Buscar</button>
+                </form>
+            </div>        
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Código</th>
+                        <th>Nome</th>
+                        <th>Ano Lançamento</th>
+                        <th>Artista</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="album : ${albuns}">
+                        <td th:text="${album.codigo}">Código</td>
+                        <td th:text="${album.nome}">Nome</td>
+                        <td th:text="${album.anoLancamento}">Ano Lançamento</td>
+                        <td th:text="${album.artista.nome}">Artista</td>
+                        <td>
+                            <a th:href="@{/albuns/editar/{codigo}(codigo=${album.codigo})}" class="btn btn-edit">Editar</a>
+                                                    
+                            <form th:action="@{/albuns/excluir/{codigo}(codigo=${album.codigo})}" method="post" 
+                            th:onsubmit="return confirm('Tem certeza que deseja excluir?');" style="display:inline;">
+                                <button type="submit" class="btn btn-delete">Excluir</button>
+                            </form>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+    </body>
+</html>

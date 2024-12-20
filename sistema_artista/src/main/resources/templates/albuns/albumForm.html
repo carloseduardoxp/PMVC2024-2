@@ -1,0 +1,42 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link th:href="@{/css/styles.css}" rel="stylesheet"> 
+</head>
+<body>
+    <div class="container">
+        <form th:action="@{${'/albuns/novo'}}" th:object="${album}" method="post">            
+            <div>
+                <label for="codigo">Código:</label>
+                <input type="text" th:field="*{codigo}" id="codigo" 
+                 th:readonly="true" />
+            </div>
+
+            <div>
+                <label for="nome">Nome:</label>
+                <input type="text" th:field="*{nome}" id="nome" placeholder="Digite o nome" required />
+            </div>
+
+            <div>
+                <label for="anoLancamento">Ano de Lançamento:</label>
+                <input type="number" th:field="*{anoLancamento}" id="anoLancamento" placeholder="Digite o ano de lançamento" required />
+            </div>
+
+            <div>
+                <label for="artista">Artista:</label>
+                <select id="artista" name="artista" th:field="*{artista.codigo}">
+                    <option value="" disabled selected>Selecione um artista</option>
+                    <option th:each="artista : ${artistas}" 
+                            th:value="${artista.codigo}" 
+                            th:text="${artista.nome}">
+                    </option>
+                </select>
+            </div>
+
+
+            <button type="submit" text="Salvar">Salvar</button>
+        </form>
+
+        <a th:href="@{/artistas/listar}" class="btn">Voltar à Lista de Artistas</a>
+    </div>
+</body>
+</html>

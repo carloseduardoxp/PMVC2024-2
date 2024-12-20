@@ -42,6 +42,7 @@ label {
     letter-spacing: 0.5px;
 }
 
+input[type="number"],
 input[type="text"],
 input[type="password"],
 input[type="checkbox"] {
