@@ -5,7 +5,6 @@ import java.sql.SQLException;
 import java.util.List;
 
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
 import br.edu.iftm.tspi.pmvc.sistema_artista.domain.Album;
@@ -30,9 +29,33 @@ public class AlbumRepository {
                       from tb_album al,tb_artista a
                       where al.cod_artista = a.cod_artista;
                       """;
-        return conexao.query(sql,
-                            new AlbumRowMapper()
-                            );
+        return conexao.query(sql, (rs, rowNum) -> {
+                Album album = new Album();
+                album.setCodigo(rs.getInt("cod_album"));
+                album.setNome(rs.getString("nom_album"));
+                album.setAnoLancamento(rs.getInt("ano_lancamento"));
+
+                Artista artista = new Artista();
+                artista.setCodigo(rs.getInt("cod_artista"));
+                artista.setNome(rs.getString("nom_artista"));
+
+                album.setArtista(artista);
+                return album;
+        } );
+    }
+
+    public Album getAlbum(ResultSet rs) throws SQLException {
+        Album album = new Album();
+        album.setCodigo(rs.getInt("cod_album"));
+        album.setNome(rs.getString("nom_album"));
+        album.setAnoLancamento(rs.getInt("ano_lancamento"));
+
+        Artista artista = new Artista();
+        artista.setCodigo(rs.getInt("cod_artista"));
+        artista.setNome(rs.getString("nom_artista"));
+
+        album.setArtista(artista);
+        return album;
     }
 
     public List<Album> buscarPorNome(String nome) {
@@ -47,7 +70,19 @@ public class AlbumRepository {
                       and lower(nom_album) like ?
                       """;
         return conexao.query(sql,
-                            new AlbumRowMapper(),
+         (rs, rowNum) -> {
+            Album album = new Album();
+            album.setCodigo(rs.getInt("cod_album"));
+            album.setNome(rs.getString("nom_album"));
+            album.setAnoLancamento(rs.getInt("ano_lancamento"));
+
+            Artista artista = new Artista();
+            artista.setCodigo(rs.getInt("cod_artista"));
+            artista.setNome(rs.getString("nom_artista"));
+
+            album.setArtista(artista);
+            return album;
+    } ,
                             "%"+nome.toLowerCase()+"%");
     }
 
@@ -93,26 +128,20 @@ public class AlbumRepository {
                       and cod_album = ?
                       """;    
         return conexao.queryForObject(sql, 
-                   new AlbumRowMapper(),
+         (rs, rowNum) -> {
+            Album album = new Album();
+            album.setCodigo(rs.getInt("cod_album"));
+            album.setNome(rs.getString("nom_album"));
+            album.setAnoLancamento(rs.getInt("ano_lancamento"));
+
+            Artista artista = new Artista();
+            artista.setCodigo(rs.getInt("cod_artista"));
+            artista.setNome(rs.getString("nom_artista"));
+
+            album.setArtista(artista);
+            return album;
+    },
                    codigo);
     }
 
-}
-
-class AlbumRowMapper implements RowMapper<Album> {
-
-    @Override
-    public Album mapRow(ResultSet rs, int rowNum) throws SQLException {
-        Album album = new Album();
-        album.setCodigo(rs.getInt("cod_album"));
-        album.setNome(rs.getString("nom_album"));
-        album.setAnoLancamento(rs.getInt("ano_lancamento"));
-
-        Artista artista = new Artista();
-        artista.setCodigo(rs.getInt("cod_artista")); 
-        artista.setNome(rs.getString("nom_artista"));
-        album.setArtista(artista);
-
-        return album;
-    }
 }
