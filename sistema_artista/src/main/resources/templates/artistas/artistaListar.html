@@ -6,6 +6,8 @@
     <body>
         <div class="container">
 
+            <header th:insert="~{fragments/menu :: menu}"></header>
+
             <div th:if="${mensagem}">
                 <p th:text="${mensagem}"></p>
             </div>
@@ -41,7 +43,12 @@
                     </tr>
                 </tbody>
             </table>
+
+            <footer th:insert="~{fragments/footer :: footer}"></footer>
+            
         </div>
+
+        
 
     </body>
 </html>

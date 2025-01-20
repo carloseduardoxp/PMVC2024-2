@@ -13,9 +13,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import br.edu.iftm.tspi.pmvc.sistema_artista.domain.Artista;
 import br.edu.iftm.tspi.pmvc.sistema_artista.repository.ArtistaRepository;
 
-
-
-
 @Controller
 public class ArtistaController {
 

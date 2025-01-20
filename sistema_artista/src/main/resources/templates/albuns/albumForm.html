@@ -4,6 +4,9 @@
 </head>
 <body>
     <div class="container">
+
+        <header th:insert="~{fragments/menu :: menu}"></header>
+
         <form th:action="@{${'/albuns/novo'}}" th:object="${album}" method="post">            
             <div>
                 <label for="codigo">Código:</label>
@@ -37,6 +40,12 @@
         </form>
 
         <a th:href="@{/artistas/listar}" class="btn">Voltar à Lista de Artistas</a>
+
+        <footer th:insert="~{fragments/footer :: footer}"></footer>
+        
     </div>
+
+    
+
 </body>
 </html>
