@@ -1,5 +1,9 @@
 package br.edu.iftm.tspi.pmvc.login.service;
 
+import java.util.Optional;
+
+import org.springframework.dao.DataAccessException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -13,23 +17,23 @@ public class LoginService {
 
     private final BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 
-
     public LoginService(LoginRepository repository) {
         this.repository = repository;
     }
 
-    public boolean verificaLoginSenha(Login loginDigitado) {
-        Login loginBanco = repository.verificarLogin(loginDigitado);
-        if (loginBanco == null) {
+    public boolean verificaLogin(Login loginDigitado) {
+        try {
+            Login loginBanco = repository.validarLogin(loginDigitado);
+            return encoder.matches(loginDigitado.getSenha(),loginBanco.getSenha());
+        } catch(EmptyResultDataAccessException e) {
             return false;
         }
-        return encoder.matches(loginDigitado.getSenha(), loginBanco.getSenha());
     }
 
     public void salvar(Login login) {
-        login.setSenha(encoder.encode(login.getSenha()));
+        String senhaCriptografada = encoder.encode(login.getSenha());
+        login.setSenha(senhaCriptografada);
         repository.salvar(login);
     }
         
-    
 }

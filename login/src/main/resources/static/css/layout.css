@@ -1,14 +1,13 @@
-
 body {
-    background-image: url(../img/bpxxqqvps4h91.gif);
+    background-image: url(../img/teste.gif);
     background-size: cover;
-    color: #ffffff; 
-    font-family: 'Arial', sans-serif; 
+    color: #ffffff;
+    font-family: 'Arial', sans-serif;
 }
 
-
-.login-container,.cadastro-container {
-    background-color: #0d1321; 
+.login-container,
+.cadastro-container {
+    background-color: #0d1321;
     width: 300px;
     padding: 20px;
     border-radius: 10px;
@@ -28,22 +27,22 @@ form {
 
 label {
     margin-bottom: 5px;
-    color: #ffffff; 
+    color: #ffffff;
 }
 
 input {
     padding: 8px;
     margin-bottom: 15px;
-    border: 1px solid #ffffff; 
+    border: 1px solid #ffffff;
     border-radius: 5px;
-    background-color: #00121e; 
-    color: #ffffff; 
+    background-color: #00121e;
+    color: #ffffff;
 }
 
 button {
     padding: 10px;
-    background-color: #29a9ff; 
-    color: #ffffff; 
+    background-color: #29a9ff;
+    color: #ffffff;
     border: none;
     border-radius: 5px;
     cursor: pointer;
@@ -58,7 +57,7 @@ button:hover {
     display: block;
     text-align: center;
     margin-top: 10px;
-    color: #ffffff; 
+    color: #ffffff;
 }
 
 .signup-link:hover {

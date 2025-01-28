@@ -3,11 +3,10 @@ package br.edu.iftm.tspi.pmvc.login.controller;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 
 import br.edu.iftm.tspi.pmvc.login.domain.Login;
 import br.edu.iftm.tspi.pmvc.login.service.LoginService;
-
-import org.springframework.web.bind.annotation.PostMapping;
 
 @Controller
 public class LoginController {
@@ -18,7 +17,17 @@ public class LoginController {
         this.service = service;
     }
 
-    @GetMapping("/")    
+    @PostMapping("/login/entrar")
+    public String validarLogin(Login login,Model model) {
+        if (service.verificaLogin(login)) {
+            model.addAttribute("mensagem", "usuario logado com sucesso");
+        } else {
+            model.addAttribute("mensagem", "usuario ou senha invalidos");
+        }
+        return "login/login";
+    }
+
+    @GetMapping("/")
     public String telaInicial(Model model) {
         return "login/login";
     }
@@ -28,23 +37,11 @@ public class LoginController {
         return "login/cadastro";
     }
 
-    @PostMapping("/login/entrar")
-    public String logar(Login loginDigitado,Model model) {
-        if (service.verificaLoginSenha(loginDigitado)) {
-            model.addAttribute("mensagem","Usuário autenticado com sucesso");
-        } else {
-            model.addAttribute("mensagem","Usuário ou Senha inválidos");
-        }
-        
-        return "login/login";
-    }
-
     @PostMapping("/login/novoUsuario")
     public String novoUsuario(Login loginDigitado,Model model) {
         service.salvar(loginDigitado);
-        model.addAttribute("mensagem","Usuário "+loginDigitado.getUsuario()+" cadastrado com sucesso");        
+        model.addAttribute("mensagem","Usuário "+loginDigitado.getUsuario()+" cadastrado com sucesso"); 
         return "login/login";
     }
     
-
 }
